@@ -23,10 +23,23 @@ public class Tenpista {
     @OneToMany(mappedBy = "tenpista", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
+    // ===== Constructors =====
+
+    public Tenpista() {
+    }
+
+    public Tenpista(String name) {
+        this.name = name;
+    }
+
     // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,5 +52,9 @@ public class Tenpista {
 
     public List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
