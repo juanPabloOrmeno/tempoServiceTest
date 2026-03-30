@@ -2,8 +2,10 @@ package org.bank.temposervice.service.impl;
 
 import org.bank.temposervice.dto.request.TransactionRequest;
 import org.bank.temposervice.dto.response.TransactionResponse;
+import org.bank.temposervice.entity.Tenpista;
 import org.bank.temposervice.model.Transaction;
 
+import org.bank.temposervice.repository.TenpistaRepository;
 import org.bank.temposervice.repository.TransactionRepository;
 import org.bank.temposervice.service.TransactionService;
 import org.slf4j.Logger;
@@ -18,19 +20,28 @@ public class TransactionServiceImpl implements TransactionService {
     private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     private final TransactionRepository transactionRepository;
+    private final TenpistaRepository tenpistaRepository;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository,
+                                 TenpistaRepository tenpistaRepository) {
         this.transactionRepository = transactionRepository;
+        this.tenpistaRepository = tenpistaRepository;
     }
 
     @Override
     public TransactionResponse createTransaction(TransactionRequest request) {
         log.info("Creating transaction with transactionId: {}", request.transactionId());
 
+        // Validar que el tenpista existe
+        Tenpista tenpista = tenpistaRepository.findById(request.tenpistaId())
+                .orElseThrow(() -> new RuntimeException("Tenpista not found with id: " + request.tenpistaId()));
+
         Transaction transaction = new Transaction();
         transaction.setTransactionId(request.transactionId());
         transaction.setAmount(request.amount());
         transaction.setMerchant(request.merchant());
+        transaction.setTenpista(tenpista);
+        transaction.setTransactionDate(request.transactionDate());
 
         Transaction savedTransaction = transactionRepository.save(transaction);
 
@@ -63,7 +74,7 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.getAmount(),
                 transaction.getMerchant(),
                 transaction.getTenpista() != null ? transaction.getTenpista().getName() : null,
-                null,  // transactionDate
+                transaction.getTransactionDate(),
                 transaction.getCreatedAt()
         );
     }

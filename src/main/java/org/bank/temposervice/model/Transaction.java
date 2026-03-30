@@ -25,6 +25,9 @@ public class Transaction {
     @JoinColumn(name = "tenpista_id", nullable = true)
     private Tenpista tenpista;
 
+    @Column(name = "transaction_date", nullable = false)
+    private LocalDateTime transactionDate;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -94,6 +97,14 @@ public class Transaction {
 
     public void setTenpista(Tenpista tenpista) {
         this.tenpista = tenpista;
+    }
+
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public LocalDateTime getCreatedAt() {

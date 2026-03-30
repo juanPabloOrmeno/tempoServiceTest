@@ -16,8 +16,9 @@ public record TransactionRequest(
         @NotBlank(message = "merchant is required")
         String merchant,
 
-        @NotBlank(message = "tenpistaName is required")
-        String tenpistaName,
+        @NotNull(message = "tenpistaId is required")
+        @Positive(message = "tenpistaId must be greater than 0")
+        Long tenpistaId,
 
         @NotNull(message = "transactionDate is required")
         LocalDateTime transactionDate

@@ -1,5 +1,6 @@
 package org.bank.temposervice.service.impl;
 
+import org.bank.temposervice.dto.request.TenpistaRequest;
 import org.bank.temposervice.dto.response.TenpistaResponse;
 import org.bank.temposervice.entity.Tenpista;
 import org.bank.temposervice.repository.TenpistaRepository;
@@ -39,6 +40,18 @@ public class TenpistaServiceImpl implements TenpistaService {
                 .orElseThrow(() -> new RuntimeException("Tenpista not found with name: " + name));
 
         return mapToResponse(tenpista);
+    }
+
+    @Override
+    public TenpistaResponse create(TenpistaRequest request) {
+        log.info("Creating tenpista with name: {}", request.name());
+
+        Tenpista tenpista = new Tenpista();
+        tenpista.setName(request.name());
+
+        Tenpista savedTenpista = tenpistaRepository.save(tenpista);
+
+        return mapToResponse(savedTenpista);
     }
 
     private TenpistaResponse mapToResponse(Tenpista tenpista) {
