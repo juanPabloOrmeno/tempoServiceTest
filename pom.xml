@@ -11,8 +11,8 @@
     <groupId>org.bank</groupId>
     <artifactId>tempoService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>issuingBank</name>
-    <description>issuingBank</description>
+    <name>tempoService</name>
+    <description>tempoService</description>
     <url/>
     <licenses>
         <license/>
