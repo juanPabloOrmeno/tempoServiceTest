@@ -1,7 +1,7 @@
 package org.bank.temposervice.model;
 
 import jakarta.persistence.*;
-import org.bank.temposervice.entity.Tenpista;
+import org.bank.temposervice.entity.Tempista;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,8 +22,8 @@ public class Transaction {
     private String merchant;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenpista_id", nullable = true)
-    private Tenpista tenpista;
+    @JoinColumn(name = "tempista_id", nullable = true)
+    private Tempista tempista;
 
     @Column(name = "transaction_date", nullable = false)
     private LocalDateTime transactionDate;
@@ -91,12 +91,12 @@ public class Transaction {
         this.merchant = merchant;
     }
 
-    public Tenpista getTenpista() {
-        return tenpista;
+    public Tempista getTempista() {
+        return tempista;
     }
 
-    public void setTenpista(Tenpista tenpista) {
-        this.tenpista = tenpista;
+    public void setTempista(Tempista tempista) {
+        this.tempista = tempista;
     }
 
     public LocalDateTime getTransactionDate() {

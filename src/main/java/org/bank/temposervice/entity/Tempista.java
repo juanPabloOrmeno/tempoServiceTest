@@ -6,12 +6,12 @@ import org.bank.temposervice.model.Transaction;
 import java.util.List;
 
 @Entity
-@Table(name = "tenpistas",
+@Table(name = "tempistas",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_tenpista_name", columnNames = "name")
+                @UniqueConstraint(name = "uk_tempista_name", columnNames = "name")
         }
 )
-public class Tenpista {
+public class Tempista {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +20,15 @@ public class Tenpista {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "tenpista", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tempista", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
     // ===== Constructors =====
 
-    public Tenpista() {
+    public Tempista() {
     }
 
-    public Tenpista(String name) {
+    public Tempista(String name) {
         this.name = name;
     }
 

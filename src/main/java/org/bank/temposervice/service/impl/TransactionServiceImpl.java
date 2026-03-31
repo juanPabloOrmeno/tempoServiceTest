@@ -2,10 +2,10 @@ package org.bank.temposervice.service.impl;
 
 import org.bank.temposervice.dto.request.TransactionRequest;
 import org.bank.temposervice.dto.response.TransactionResponse;
-import org.bank.temposervice.entity.Tenpista;
+import org.bank.temposervice.entity.Tempista;
 import org.bank.temposervice.model.Transaction;
 
-import org.bank.temposervice.repository.TenpistaRepository;
+import org.bank.temposervice.repository.TempistaRepository;
 import org.bank.temposervice.repository.TransactionRepository;
 import org.bank.temposervice.service.TransactionService;
 import org.slf4j.Logger;
@@ -20,27 +20,27 @@ public class TransactionServiceImpl implements TransactionService {
     private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     private final TransactionRepository transactionRepository;
-    private final TenpistaRepository tenpistaRepository;
+    private final TempistaRepository tempistaRepository;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                 TenpistaRepository tenpistaRepository) {
+                                 TempistaRepository tempistaRepository) {
         this.transactionRepository = transactionRepository;
-        this.tenpistaRepository = tenpistaRepository;
+        this.tempistaRepository = tempistaRepository;
     }
 
     @Override
     public TransactionResponse createTransaction(TransactionRequest request) {
         log.info("Creating transaction with transactionId: {}", request.transactionId());
 
-        // Validar que el tenpista existe
-        Tenpista tenpista = tenpistaRepository.findById(request.tenpistaId())
-                .orElseThrow(() -> new RuntimeException("Tenpista not found with id: " + request.tenpistaId()));
+        // Validar que el tempista existe
+        Tempista tempista = tempistaRepository.findById(request.tempistaId())
+                .orElseThrow(() -> new RuntimeException("Tempista not found with id: " + request.tempistaId()));
 
         Transaction transaction = new Transaction();
         transaction.setTransactionId(request.transactionId());
         transaction.setAmount(request.amount());
         transaction.setMerchant(request.merchant());
-        transaction.setTenpista(tenpista);
+        transaction.setTempista(tempista);
         transaction.setTransactionDate(request.transactionDate());
 
         Transaction savedTransaction = transactionRepository.save(transaction);
@@ -68,12 +68,22 @@ public class TransactionServiceImpl implements TransactionService {
         return mapToResponse(transaction);
     }
 
+    @Override
+    public void deleteTransaction(Integer transactionId) {
+        log.info("Deleting transaction with transactionId: {}", transactionId);
+
+        Transaction transaction = transactionRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> new RuntimeException("Transaction not found with transactionId: " + transactionId));
+
+        transactionRepository.delete(transaction);
+    }
+
     private TransactionResponse mapToResponse(Transaction transaction) {
         return new TransactionResponse(
                 transaction.getTransactionId(),
                 transaction.getAmount(),
                 transaction.getMerchant(),
-                transaction.getTenpista() != null ? transaction.getTenpista().getName() : null,
+                transaction.getTempista() != null ? transaction.getTempista().getName() : null,
                 transaction.getTransactionDate(),
                 transaction.getCreatedAt()
         );

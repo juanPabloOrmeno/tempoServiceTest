@@ -1,8 +1,8 @@
 package org.bank.temposervice.controller;
 
-import org.bank.temposervice.dto.request.TenpistaRequest;
-import org.bank.temposervice.dto.response.TenpistaResponse;
-import org.bank.temposervice.service.TenpistaService;
+import org.bank.temposervice.dto.request.TempistaRequest;
+import org.bank.temposervice.dto.response.TempistaResponse;
+import org.bank.temposervice.service.TempistaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,14 +18,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@DisplayName("TenpistaController Tests")
-class TenpistaControllerTest {
+@DisplayName("TempistaController Tests")
+class TempistaControllerTest {
 
     @Mock
-    private TenpistaService tenpistaService;
+    private TempistaService tempistaService;
 
     @InjectMocks
-    private TenpistaController tenpistaController;
+    private TempistaController tempistaController;
 
     @BeforeEach
     void setUp() {
@@ -33,52 +33,52 @@ class TenpistaControllerTest {
     }
 
     @Test
-    @DisplayName("Should get all tenpistas successfully")
-    void testGetAllTenpistas_Success() {
+    @DisplayName("Should get all tempistas successfully")
+    void testGetAllTempistas_Success() {
         // Arrange
-        TenpistaResponse response1 = new TenpistaResponse(1L, "Juan Pérez");
-        TenpistaResponse response2 = new TenpistaResponse(2L, "María García");
-        List<TenpistaResponse> responses = Arrays.asList(response1, response2);
+        TempistaResponse response1 = new TempistaResponse(1L, "Juan Pérez");
+        TempistaResponse response2 = new TempistaResponse(2L, "María García");
+        List<TempistaResponse> responses = Arrays.asList(response1, response2);
 
-        when(tenpistaService.getAllTenpistas()).thenReturn(responses);
+        when(tempistaService.getAllTempistas()).thenReturn(responses);
 
         // Act
-        var result = tenpistaController.getAllTenpistas();
+        var result = tempistaController.getAllTempistas();
 
         // Assert
         assertNotNull(result);
         assertEquals(200, result.getStatusCode().value());
         assertNotNull(result.getBody());
         assertEquals(2, result.getBody().size());
-        verify(tenpistaService, times(1)).getAllTenpistas();
+        verify(tempistaService, times(1)).getAllTempistas();
     }
 
     @Test
-    @DisplayName("Should return empty list when no tenpistas exist")
-    void testGetAllTenpistas_EmptyList() {
+    @DisplayName("Should return empty list when no tempistas exist")
+    void testGetAllTempistas_EmptyList() {
         // Arrange
-        when(tenpistaService.getAllTenpistas()).thenReturn(List.of());
+        when(tempistaService.getAllTempistas()).thenReturn(List.of());
 
         // Act
-        var result = tenpistaController.getAllTenpistas();
+        var result = tempistaController.getAllTempistas();
 
         // Assert
         assertNotNull(result);
         assertEquals(200, result.getStatusCode().value());
         assertNotNull(result.getBody());
         assertTrue(result.getBody().isEmpty());
-        verify(tenpistaService, times(1)).getAllTenpistas();
+        verify(tempistaService, times(1)).getAllTempistas();
     }
 
     @Test
-    @DisplayName("Should get tenpista by name successfully")
+    @DisplayName("Should get tempista by name successfully")
     void testGetByName_Success() {
         // Arrange
-        TenpistaResponse response = new TenpistaResponse(1L, "Juan Pérez");
-        when(tenpistaService.getByName("Juan Pérez")).thenReturn(response);
+        TempistaResponse response = new TempistaResponse(1L, "Juan Pérez");
+        when(tempistaService.getByName("Juan Pérez")).thenReturn(response);
 
         // Act
-        var result = tenpistaController.getByName("Juan Pérez");
+        var result = tempistaController.getByName("Juan Pérez");
 
         // Assert
         assertNotNull(result);
@@ -86,31 +86,31 @@ class TenpistaControllerTest {
         assertNotNull(result.getBody());
         assertEquals(1L, result.getBody().id());
         assertEquals("Juan Pérez", result.getBody().name());
-        verify(tenpistaService, times(1)).getByName("Juan Pérez");
+        verify(tempistaService, times(1)).getByName("Juan Pérez");
     }
 
     @Test
-    @DisplayName("Should throw exception when tenpista not found by name")
+    @DisplayName("Should throw exception when tempista not found by name")
     void testGetByName_NotFound() {
         // Arrange
-        when(tenpistaService.getByName(anyString()))
-                .thenThrow(new RuntimeException("Tenpista not found"));
+        when(tempistaService.getByName(anyString()))
+                .thenThrow(new RuntimeException("Tempista not found"));
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> tenpistaController.getByName("Non-existent"));
-        verify(tenpistaService, times(1)).getByName("Non-existent");
+        assertThrows(RuntimeException.class, () -> tempistaController.getByName("Non-existent"));
+        verify(tempistaService, times(1)).getByName("Non-existent");
     }
 
     @Test
-    @DisplayName("Should create tenpista successfully")
-    void testCreateTenpista_Success() {
+    @DisplayName("Should create tempista successfully")
+    void testCreateTempista_Success() {
         // Arrange
-        TenpistaRequest request = new TenpistaRequest("Juan Pérez");
-        TenpistaResponse response = new TenpistaResponse(1L, "Juan Pérez");
-        when(tenpistaService.create(any(TenpistaRequest.class))).thenReturn(response);
+        TempistaRequest request = new TempistaRequest("Juan Pérez");
+        TempistaResponse response = new TempistaResponse(1L, "Juan Pérez");
+        when(tempistaService.create(any(TempistaRequest.class))).thenReturn(response);
 
         // Act
-        var result = tenpistaController.createTenpista(request);
+        var result = tempistaController.createTempista(request);
 
         // Assert
         assertNotNull(result);
@@ -118,6 +118,6 @@ class TenpistaControllerTest {
         assertNotNull(result.getBody());
         assertEquals(1L, result.getBody().id());
         assertEquals("Juan Pérez", result.getBody().name());
-        verify(tenpistaService, times(1)).create(any(TenpistaRequest.class));
+        verify(tempistaService, times(1)).create(any(TempistaRequest.class));
     }
 }

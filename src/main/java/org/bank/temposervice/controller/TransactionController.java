@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/transaction")
 @Validated
-@Tag(name = "Transactions", description = "API para gestión de transacciones de Tenpistas")
+@Tag(name = "Transactions", description = "API para gestión de transacciones de Tempistas")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -34,7 +34,7 @@ public class TransactionController {
     @PostMapping
     @Operation(
             summary = "Crear una nueva transacción",
-            description = "Registra una nueva transacción asociada a un Tenpista"
+            description = "Registra una nueva transacción asociada a un Tempista"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -116,5 +116,40 @@ public class TransactionController {
     ) {
         TransactionResponse response = transactionService.getTransactionById(transactionId);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{transactionId}")
+    @Operation(
+            summary = "Eliminar transacción",
+            description = "Elimina una transacción por su transactionId"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Transacción eliminada exitosamente",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "transactionId inválido",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Transacción no encontrada",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error interno del servidor",
+                    content = @Content
+            )
+    })
+    public ResponseEntity<Void> deleteTransaction(
+            @Parameter(description = "ID de negocio de la transacción", required = true, example = "1001")
+            @PathVariable @Positive(message = "transactionId must be greater than 0") Integer transactionId
+    ) {
+        transactionService.deleteTransaction(transactionId);
+        return ResponseEntity.noContent().build();
     }
 }

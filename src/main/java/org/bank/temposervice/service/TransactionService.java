@@ -12,4 +12,6 @@ public interface TransactionService {
     List<TransactionResponse> getAllTransactions();
 
     TransactionResponse getTransactionById(Integer transactionId);
+
+    void deleteTransaction(Integer transactionId);
 }

@@ -2,9 +2,9 @@ package org.bank.temposervice.service.impl;
 
 import org.bank.temposervice.dto.request.TransactionRequest;
 import org.bank.temposervice.dto.response.TransactionResponse;
-import org.bank.temposervice.entity.Tenpista;
+import org.bank.temposervice.entity.Tempista;
 import org.bank.temposervice.model.Transaction;
-import org.bank.temposervice.repository.TenpistaRepository;
+import org.bank.temposervice.repository.TempistaRepository;
 import org.bank.temposervice.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,13 +31,13 @@ class TransactionServiceImplTest {
     private TransactionRepository transactionRepository;
 
     @Mock
-    private TenpistaRepository tenpistaRepository;
+    private TempistaRepository tempistaRepository;
 
     @InjectMocks
     private TransactionServiceImpl transactionService;
 
     private Transaction transaction;
-    private Tenpista tenpista;
+    private Tempista tempista;
     private TransactionRequest transactionRequest;
     private LocalDateTime now;
 
@@ -45,16 +45,16 @@ class TransactionServiceImplTest {
     void setUp() {
         now = LocalDateTime.now();
 
-        tenpista = new Tenpista();
-        tenpista.setId(1L);
-        tenpista.setName("Juan Pérez");
+        tempista = new Tempista();
+        tempista.setId(1L);
+        tempista.setName("Juan Pérez");
 
         transaction = new Transaction();
         transaction.setId(1L);
         transaction.setTransactionId(100);
         transaction.setAmount(500);
         transaction.setMerchant("Amazon");
-        transaction.setTenpista(tenpista);
+        transaction.setTempista(tempista);
         transaction.setTransactionDate(now);
         transaction.setCreatedAt(now);
         transaction.setUpdatedAt(now);
@@ -72,7 +72,7 @@ class TransactionServiceImplTest {
     @DisplayName("Should create transaction successfully")
     void testCreateTransaction_Success() {
         // Arrange
-        when(tenpistaRepository.findById(1L)).thenReturn(Optional.of(tenpista));
+        when(tempistaRepository.findById(1L)).thenReturn(Optional.of(tempista));
         when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
 
         // Act
@@ -83,16 +83,16 @@ class TransactionServiceImplTest {
         assertEquals(100, result.transactionId());
         assertEquals(500, result.amount());
         assertEquals("Amazon", result.merchant());
-        assertEquals("Juan Pérez", result.tenpistaName());
-        verify(tenpistaRepository, times(1)).findById(1L);
+        assertEquals("Juan Pérez", result.tempistaName());
+        verify(tempistaRepository, times(1)).findById(1L);
         verify(transactionRepository, times(1)).save(any(Transaction.class));
     }
 
     @Test
-    @DisplayName("Should throw exception when tenpista not found for transaction")
-    void testCreateTransaction_TenpistaNotFound() {
+    @DisplayName("Should throw exception when tempista not found for transaction")
+    void testCreateTransaction_TempistaNotFound() {
         // Arrange
-        when(tenpistaRepository.findById(999L)).thenReturn(Optional.empty());
+        when(tempistaRepository.findById(999L)).thenReturn(Optional.empty());
 
         TransactionRequest request = new TransactionRequest(
                 100,
@@ -104,7 +104,7 @@ class TransactionServiceImplTest {
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> transactionService.createTransaction(request));
-        verify(tenpistaRepository, times(1)).findById(999L);
+        verify(tempistaRepository, times(1)).findById(999L);
         verify(transactionRepository, never()).save(any(Transaction.class));
     }
 
@@ -117,7 +117,7 @@ class TransactionServiceImplTest {
         transaction2.setTransactionId(101);
         transaction2.setAmount(1000);
         transaction2.setMerchant("Ebay");
-        transaction2.setTenpista(tenpista);
+        transaction2.setTempista(tempista);
         transaction2.setTransactionDate(now);
         transaction2.setCreatedAt(now);
         transaction2.setUpdatedAt(now);
@@ -180,27 +180,27 @@ class TransactionServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should handle transaction with null tenpista")
-    void testGetTransactionById_NullTenpista() {
+    @DisplayName("Should handle transaction with null tempista")
+    void testGetTransactionById_NullTempista() {
         // Arrange
-        Transaction txWithoutTenpista = new Transaction();
-        txWithoutTenpista.setId(3L);
-        txWithoutTenpista.setTransactionId(102);
-        txWithoutTenpista.setAmount(250);
-        txWithoutTenpista.setMerchant("Store");
-        txWithoutTenpista.setTenpista(null);
-        txWithoutTenpista.setTransactionDate(now);
-        txWithoutTenpista.setCreatedAt(now);
-        txWithoutTenpista.setUpdatedAt(now);
+        Transaction txWithoutTempista = new Transaction();
+        txWithoutTempista.setId(3L);
+        txWithoutTempista.setTransactionId(102);
+        txWithoutTempista.setAmount(250);
+        txWithoutTempista.setMerchant("Store");
+        txWithoutTempista.setTempista(null);
+        txWithoutTempista.setTransactionDate(now);
+        txWithoutTempista.setCreatedAt(now);
+        txWithoutTempista.setUpdatedAt(now);
 
-        when(transactionRepository.findByTransactionId(102)).thenReturn(Optional.of(txWithoutTenpista));
+        when(transactionRepository.findByTransactionId(102)).thenReturn(Optional.of(txWithoutTempista));
 
         // Act
         TransactionResponse result = transactionService.getTransactionById(102);
 
         // Assert
         assertNotNull(result);
-        assertNull(result.tenpistaName());
+        assertNull(result.tempistaName());
         assertEquals(102, result.transactionId());
     }
 }

@@ -1,14 +1,14 @@
-# **TempoService** - Sistema de Gestión de Tenpistas y Transacciones Bancarias
+# **TempoService** - Sistema de Gestión de Tempistas y Transacciones Bancarias
 
 ## 📋 Descripción del Proyecto
 
-**TempoService** es una aplicación backend desarrollada en **Spring Boot 4.0.1** que proporciona un sistema integral de gestión de **Tenpistas** (clientes) y **Transacciones Bancarias** asociadas a ellos. La aplicación está diseñada para ser escalable, segura y fácil de mantener, siguiendo las mejores prácticas de arquitectura de software y metodologías ágiles.
+**TempoService** es una aplicación backend desarrollada en **Spring Boot 4.0.1** que proporciona un sistema integral de gestión de **Tempistas** (clientes) y **Transacciones Bancarias** asociadas a ellos. La aplicación está diseñada para ser escalable, segura y fácil de mantener, siguiendo las mejores prácticas de arquitectura de software y metodologías ágiles.
 
 ### 🎯 Objetivo de Negocio
 
 TempoService soluciona la necesidad de gestionar de manera eficiente:
-- **Registro y administración de Tenpistas** (clientes bancarios)
-- **Registro y consulta de transacciones** asociadas a cada Tenpista
+- **Registro y administración de Tempistas** (clientes bancarios)
+- **Registro y consulta de transacciones** asociadas a cada Tempista
 - **Trazabilidad completa** de operaciones con logging estructurado en JSON
 - **Correlación de eventos** mediante IDs únicos para auditoría y análisis
 
@@ -54,27 +54,27 @@ tempoService/
 │   │   │   ├── config/                               # Configuración
 │   │   │   │   └── OpenApiConfig.java                # Configuración Swagger/OpenAPI
 │   │   │   ├── controller/                           # REST Controllers
-│   │   │   │   ├── TenpistaController.java
+│   │   │   │   ├── TempistaController.java
 │   │   │   │   └── TransactionController.java
 │   │   │   ├── service/                              # Interfaces de servicios
-│   │   │   │   ├── TenpistaService.java
+│   │   │   │   ├── TempistaService.java
 │   │   │   │   ├── TransactionService.java
 │   │   │   │   └── impl/                             # Implementaciones
-│   │   │   │       ├── TenpistaServiceImpl.java
+│   │   │   │       ├── TempistaServiceImpl.java
 │   │   │   │       └── TransactionServiceImpl.java
 │   │   │   ├── repository/                           # JPA Repositories
-│   │   │   │   ├── TenpistaRepository.java
+│   │   │   │   ├── TempistaRepository.java
 │   │   │   │   └── TransactionRepository.java
 │   │   │   ├── entity/                               # Entidades JPA
-│   │   │   │   └── Tenpista.java
+│   │   │   │   └── Tempista.java
 │   │   │   ├── model/                                # Modelos de datos
 │   │   │   │   └── Transaction.java
 │   │   │   ├── dto/                                  # Data Transfer Objects
 │   │   │   │   ├── request/
-│   │   │   │   │   ├── TenpistaRequest.java
+│   │   │   │   │   ├── TempistaRequest.java
 │   │   │   │   │   └── TransactionRequest.java
 │   │   │   │   └── response/
-│   │   │   │       ├── TenpistaResponse.java
+│   │   │   │       ├── TempistaResponse.java
 │   │   │   │       ├── TransactionResponse.java
 │   │   │   │       └── ErrorResponse.java
 │   │   │   ├── exception/                            # Excepciones personalizadas
@@ -91,10 +91,10 @@ tempoService/
 │   └── test/
 │       └── java/org/bank/temposervice/
 │           ├── service/impl/
-│           │   ├── TenpistaServiceImplTest.java      # Tests del servicio
+│           │   ├── TempistaServiceImplTest.java      # Tests del servicio
 │           │   └── TransactionServiceImplTest.java
 │           └── controller/
-│               ├── TenpistaControllerTest.java       # Tests del controller
+│               ├── TempistaControllerTest.java       # Tests del controller
 │               └── TransactionControllerTest.java
 ├── pom.xml                                            # Configuración Maven
 ├── Dockerfile                                         # Configuración Docker
@@ -116,14 +116,14 @@ http://localhost:8080
 http://localhost:8080/swagger-ui.html
 ```
 
-### 1️⃣ **Tenpistas** - Endpoints de Gestión de Clientes
+### 1️⃣ **Tempistas** - Endpoints de Gestión de Clientes
 
-#### 📖 Obtener todos los Tenpistas
+#### 📖 Obtener todos los Tempistas
 ```http
-GET /tenpistas
+GET /tempistas
 ```
-- **Descripción**: Obtiene el listado completo de todos los Tenpistas
-- **Respuesta (200)**: Lista de Tenpistas
+- **Descripción**: Obtiene el listado completo de todos los Tempistas
+- **Respuesta (200)**: Lista de Tempistas
 ```json
 [
   {
@@ -137,12 +137,12 @@ GET /tenpistas
 ]
 ```
 
-#### 🔍 Obtener Tenpista por Nombre
+#### 🔍 Obtener Tempista por Nombre
 ```http
-GET /tenpistas/{name}
+GET /tempistas/{name}
 ```
-- **Parámetro**: `name` (Path) - Nombre del Tenpista
-- **Ejemplo**: `GET /tenpistas/Juan Pérez`
+- **Parámetro**: `name` (Path) - Nombre del Tempista
+- **Ejemplo**: `GET /tempistas/Juan Pérez`
 - **Respuesta (200)**:
 ```json
 {
@@ -150,11 +150,11 @@ GET /tenpistas/{name}
   "name": "Juan Pérez"
 }
 ```
-- **Respuesta (404)**: Tenpista no encontrado
+- **Respuesta (404)**: Tempista no encontrado
 
-#### ✨ Crear nuevo Tenpista
+#### ✨ Crear nuevo Tempista
 ```http
-POST /tenpistas
+POST /tempistas
 Content-Type: application/json
 
 {
@@ -195,7 +195,7 @@ GET /transaction
     "transactionId": 100,
     "amount": 500,
     "merchant": "Amazon",
-    "tenpistaName": "Juan Pérez",
+    "tempistaName": "Juan Pérez",
     "transactionDate": "2026-03-30T10:00:00",
     "createdAt": "2026-03-30T10:00:05"
   },
@@ -203,7 +203,7 @@ GET /transaction
     "transactionId": 101,
     "amount": 1000,
     "merchant": "eBay",
-    "tenpistaName": "María García",
+    "tempistaName": "María García",
     "transactionDate": "2026-03-30T11:15:00",
     "createdAt": "2026-03-30T11:15:05"
   }
@@ -222,7 +222,7 @@ GET /transaction/{transactionId}
   "transactionId": 100,
   "amount": 500,
   "merchant": "Amazon",
-  "tenpistaName": "Juan Pérez",
+  "tempistaName": "Juan Pérez",
   "transactionDate": "2026-03-30T10:00:00",
   "createdAt": "2026-03-30T10:00:05"
 }
@@ -238,7 +238,7 @@ Content-Type: application/json
   "transactionId": 102,
   "amount": 750,
   "merchant": "Walmart",
-  "tenpistaId": 1,
+  "tempistaId": 1,
   "transactionDate": "2026-03-30T14:30:00"
 }
 ```
@@ -248,7 +248,7 @@ Content-Type: application/json
   "transactionId": 102,
   "amount": 750,
   "merchant": "Walmart",
-  "tenpistaId": 1,
+  "tempistaId": 1,
   "transactionDate": "2026-03-30T14:30:00"
 }
 ```
@@ -258,7 +258,7 @@ Content-Type: application/json
   "transactionId": 102,
   "amount": 750,
   "merchant": "Walmart",
-  "tenpistaName": "Juan Pérez",
+  "tempistaName": "Juan Pérez",
   "transactionDate": "2026-03-30T14:30:00",
   "createdAt": "2026-03-30T14:30:05"
 }
@@ -267,8 +267,8 @@ Content-Type: application/json
   - `transactionId` es requerido y debe ser positivo
   - `amount` es requerido y debe ser mayor a 0
   - `merchant` es requerido y no puede estar en blanco
-  - `tenpistaId` es requerido y debe ser positivo
-  - `tenpistaId` debe existir en la base de datos
+  - `tempistaId` es requerido y debe ser positivo
+  - `tempistaId` debe existir en la base de datos
   - `transactionDate` es requerido
   - `transactionId` debe ser único
 
@@ -287,18 +287,18 @@ Content-Type: application/json
 
 ### Esquema de Datos
 
-#### Tabla: `tenpistas`
+#### Tabla: `tempistas`
 ```sql
-CREATE TABLE tenpistas (
+CREATE TABLE tempistas (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
-    CONSTRAINT uk_tenpista_name UNIQUE (name)
+    CONSTRAINT uk_tempista_name UNIQUE (name)
 );
 ```
 
 **Columnas**:
 - `id` (BIGINT) - Identificador único
-- `name` (VARCHAR) - Nombre del Tenpista (UNIQUE)
+- `name` (VARCHAR) - Nombre del Tempista (UNIQUE)
 
 ---
 
@@ -309,11 +309,11 @@ CREATE TABLE transactions (
     transaction_id INT NOT NULL UNIQUE,
     amount INT NOT NULL,
     merchant VARCHAR(255) NOT NULL,
-    tenpista_id BIGINT,
+    tempista_id BIGINT,
     transaction_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
-    FOREIGN KEY (tenpista_id) REFERENCES tenpistas(id)
+    FOREIGN KEY (tempista_id) REFERENCES tempistas(id)
 );
 ```
 
@@ -322,7 +322,7 @@ CREATE TABLE transactions (
 - `transaction_id` (INT) - ID de negocio de la transacción (UNIQUE)
 - `amount` (INT) - Monto de la transacción
 - `merchant` (VARCHAR) - Nombre del comerciante
-- `tenpista_id` (BIGINT) - Referencia al Tenpista
+- `tempista_id` (BIGINT) - Referencia al Tempista
 - `transaction_date` (TIMESTAMP) - Fecha de la transacción
 - `created_at` (TIMESTAMP) - Fecha de creación (auto-generada)
 - `updated_at` (TIMESTAMP) - Fecha de última actualización
@@ -441,7 +441,7 @@ docker-compose up
 
 ### 8. Verificar que la aplicación está ejecutándose
 ```bash
-curl -s http://localhost:8080/tenpistas | jq .
+curl -s http://localhost:8080/tempistas | jq .
 ```
 
 ---
@@ -456,10 +456,10 @@ curl -s http://localhost:8080/tenpistas | jq .
 ### Ejecutar tests específicos
 ```bash
 # Tests del servicio
-./mvnw test -Dtest=TenpistaServiceImplTest
+./mvnw test -Dtest=TempistaServiceImplTest
 
 # Tests del controller
-./mvnw test -Dtest=TenpistaControllerTest
+./mvnw test -Dtest=TempistaControllerTest
 ```
 
 ### Cobertura de Tests
@@ -476,9 +476,9 @@ curl -s http://localhost:8080/tenpistas | jq .
 
 | Componente | Tests | Estado |
 |-----------|-------|--------|
-| TenpistaServiceImpl | 6 | ✅ Pasados |
+| TempistaServiceImpl | 6 | ✅ Pasados |
 | TransactionServiceImpl | 7 | ✅ Pasados |
-| TenpistaController | 5 | ✅ Pasados |
+| TempistaController | 5 | ✅ Pasados |
 | TransactionController | 5 | ✅ Pasados |
 
 ---
@@ -502,8 +502,8 @@ logging.level.org.bank.temposervice=DEBUG
   "timestamp": "2026-03-30T16:00:00.000Z",
   "level": "INFO",
   "thread": "main",
-  "logger": "org.bank.temposervice.service.impl.TenpistaServiceImpl",
-  "message": "Getting all tenpistas",
+  "logger": "org.bank.temposervice.service.impl.TempistaServiceImpl",
+  "message": "Getting all tempistas",
   "correlationId": "abc123def456"
 }
 ```
@@ -604,7 +604,7 @@ spring.datasource.password=tu-contraseña
 
 ### Construir Imagen Docker
 ```bash
-docker build -t tenpista/tempo-service:latest .
+docker build -t tempista/tempo-service:latest .
 ```
 
 ### Ejecutar Contenedor
@@ -616,7 +616,7 @@ docker run -d \
   --env SPRING_DATASOURCE_USERNAME=postgres \
   --env SPRING_DATASOURCE_PASSWORD=postgres \
   --link postgres:postgres \
-  tenpista/tempo-service:latest
+  tempista/tempo-service:latest
 ```
 
 ### Docker Compose (Simplificado)
@@ -666,16 +666,16 @@ Could not find artifact...
 
 ## 📈 Endpoints Ejemplo con cURL
 
-### Crear Tenpista
+### Crear Tempista
 ```bash
-curl -X POST http://localhost:8080/tenpistas \
+curl -X POST http://localhost:8080/tempistas \
   -H "Content-Type: application/json" \
   -d '{"name":"Juan Pérez"}'
 ```
 
-### Obtener todos los Tenpistas
+### Obtener todos los Tempistas
 ```bash
-curl http://localhost:8080/tenpistas
+curl http://localhost:8080/tempistas
 ```
 
 ### Crear Transacción
@@ -686,7 +686,7 @@ curl -X POST http://localhost:8080/transaction \
     "transactionId": 100,
     "amount": 500,
     "merchant": "Amazon",
-    "tenpistaId": 1,
+    "tempistaId": 1,
     "transactionDate": "2026-03-30T10:00:00"
   }'
 ```

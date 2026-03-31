@@ -16,8 +16,8 @@ public record TransactionResponse(
         @Schema(description = "Giro o comercio de la transacción", example = "Supermercado Lider")
         String merchant,
 
-        @Schema(description = "Nombre del Tenpista asociado", example = "Juan Pérez")
-        String tenpistaName,
+        @Schema(description = "Nombre del Tempista asociado", example = "Juan Pérez")
+        String tempistaName,
 
         @Schema(description = "Fecha de la transacción", example = "2026-03-28T15:30:00")
         LocalDateTime transactionDate,
