@@ -21,7 +21,7 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 # Copiar el JAR compilado desde el stage anterior
-COPY --from=builder /app/target/temposervice-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/tempoService-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponer puerto
 EXPOSE 8080
